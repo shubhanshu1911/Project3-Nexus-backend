@@ -12,7 +12,7 @@ app.use(
 );
 const PORT = process.env.PORT || 8000;
 
-mongoose.connect("mongodb+srv://ishankhare30:q9aeu40XOWbjFeck@cluster0.lvqaijw.mongodb.net/?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://ishankhare30:9xKc46nqbDBqjIts@cluster0.56jacre.mongodb.net/?retryWrites=true&w=majority");
 
 
 mongoose.connection.on("connected", () => {
@@ -60,3 +60,4 @@ app.listen(PORT, function (req, res) {
 });
 
 
+// 9xKc46nqbDBqjIts
