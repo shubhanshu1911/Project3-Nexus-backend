@@ -6,9 +6,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(
-    cors({
-        origin: ["http://localhost:8000", "https://nexus-project3.onrender.com"]
-    })
+    cors(
+        {
+        origin: ["http://localhost:3000", "https://nexus-project3.onrender.com"]
+        }
+    )
 );
 const PORT = process.env.PORT || 8000;
 
@@ -23,30 +25,28 @@ mongoose.connection.on("connected", () => {
 const userSchema = new mongoose.Schema({
     name: String,
     email: String,
-    Message: String,
+    message: String,
 });
 
 const User = new mongoose.model("User", userSchema);
 
 // Make a POST request at http://localhost:8000/contact/ 
 app.post("/contact", (req, res) => {
-    const { name, email, Message } = req.body;
+    const { name, email, message } = req.body;
     //check email
     User.findOne({ email: email })
         .then((user) => {
             if (user) {
-                res.status(200).json({ message: "Your message is already received. We will get back to you soon!" });
+                return res.status(200).json({ message: "Your message is already received. We will get back to you soon!" });
             } else {
                 const newUser = new User({
                     name,
                     email,
-                    Message,
+                    message,
                 });
-                return newUser.save();
+                newUser.save();
+                return res.status(200).json({ message: "Thank you for your interest. We will get back to you soon!" });
             }
-        })
-        .then(() => {
-            res.status(200).json({ message: "Thank you for your interest. We will get back to you soon!" });
         })
         .catch((err) => {
             // If an error occurs, send a 500 status with an error message
